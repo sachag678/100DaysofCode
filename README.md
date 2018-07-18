@@ -7,7 +7,7 @@ The goal of this project is to code everyday for 1 hour.
 Make sure to write tests for each piece of code that I right. Also ensure there is continuous integration.
 
 # Data Structures
-	- Vector
+	- Vector(Dynamic Array) - using [ctypes](https://www.geeksforgeeks.org/implementation-of-dynamic-array-in-python/)
 	- linked list
 	- stack
 	- queue
