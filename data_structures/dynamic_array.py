@@ -47,7 +47,16 @@ class DynamicArray(object):
         elif index > self.size:
             self.append(value)
         else:
-            pass
+            new_array = self.make_array(self.capacity + 1)
+            for i in range(index):
+                new_array[i] = self.array[i]
+
+            new_array[i + 1] = value
+
+            for j in range(i + 2, self.size + 1):
+                new_array[j] = self.array[j - 1]
+
+            self.array = new_array
 
         self.size += 1
         return self.array

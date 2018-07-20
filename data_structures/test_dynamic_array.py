@@ -48,7 +48,16 @@ class TestDynamicArraymethods(unittest.TestCase):
         self.assertEqual(dynamic_array.count(2), 2)
 
     def test_insert(self):
-        pass
+        dynamic_array = DynamicArray()
+        dynamic_array.append(1)
+        dynamic_array.append(3)
+
+        dynamic_array2 = DynamicArray()
+        dynamic_array2.append(1)
+        dynamic_array2.append(2)
+        dynamic_array2.append(3)
+
+        self.assertEqual(dynamic_array.insert(1, 2), dynamic_array2)
 
     def test_remove(self):
         dynamic_array = DynamicArray()
