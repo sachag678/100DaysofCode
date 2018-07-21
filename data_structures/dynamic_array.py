@@ -48,13 +48,14 @@ class DynamicArray(object):
             self.append(value)
         else:
             new_array = self.make_array(self.capacity + 1)
-            for i in range(index):
-                new_array[i] = self.array[i]
-
-            new_array[i + 1] = value
-
-            for j in range(i + 2, self.size + 1):
-                new_array[j] = self.array[j - 1]
+            for i in reversed(range(self.size + 1)):
+                if i == index:
+                    new_array[i] = value
+                else:
+                    if i > index:
+                        new_array[i] = self.array[i - 1]
+                    else:
+                        new_array[i] = self.array[i]
 
             self.array = new_array
 
