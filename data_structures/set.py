@@ -57,6 +57,42 @@ class MySet():
         self.set.clear()
         self.n = 0
 
+    def xinset(self, elem):
+        """Return true if element is in set."""
+        pass
+
+    def xnotinset(self, elem):
+        """Return true if element is not in set."""
+        pass
+
+    def isdisjoint(self, other):
+        """Return true if the intersection between other and self.set is zero."""
+        pass
+
+    def issubset(self, other):
+        """Test if every element in myset is in other."""
+        pass
+
+    def issuperset(self, other):
+        """Test if every element in other is in myset."""
+        pass
+
+    def union(self, other):
+        """Return a new set with all the elements from myset and other."""
+        pass
+
+    def intersection(self, other):
+        """Return a new set with the common elements between myset and other."""
+        pass
+
+    def difference(self, other):
+        """Return a new set with the elements in myset that are not in other."""
+        pass
+
+    def symmetric_difference(self, other):
+        """Return a new set with elements that are in either set or other but not in both."""
+        pass
+
 if __name__ == '__main__':
     myset = MySet()
     myset.add(2)
