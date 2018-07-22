@@ -25,6 +25,21 @@ class MySet():
 
         return s
 
+    def __eq__(self, other):
+        """Equal method."""
+        if len(other) != self.n:
+            return False
+
+        for i in range(self.n):
+            if not other.__contains__(self.set[i]):
+                return False
+
+        for i in range(len(other)):
+            if not self.set .__contains__(other[i]):
+                return False
+
+        return True
+
     def __len__(self):
         """Return number of elements."""
         return self.n
@@ -93,7 +108,7 @@ class MySet():
 
     def issuperset(self, other):
         """Test if every element in other is in myset."""
-        for i in range(self.n):
+        for i in range(len(other)):
             if not self.set.__contains__(other[i]):
                 return False
         return True
@@ -146,5 +161,5 @@ class MySet():
         return sym_difference
 
 if __name__ == '__main__':
-    myset = MySet([1, 2, 3, 4])
+    myset = MySet([1, 4])
     myset2 = MySet([1, 5, 6, 4])
