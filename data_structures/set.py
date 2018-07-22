@@ -5,10 +5,14 @@ import numpy as np
 class MySet():
     """Set structure."""
 
-    def __init__(self):
+    def __init__(self, input=None):
         """Initialize."""
         self.set = []
         self.n = 0
+
+        if input is not None:
+            for i in range(len(input)):
+                self.add(input[i])
 
     def __repr__(self):
         """Return String representation."""
@@ -25,11 +29,22 @@ class MySet():
         """Return number of elements."""
         return self.n
 
+    def __getitem__(self, index):
+        """Return an element from a specific index."""
+        if index < 0 or index > self.n:
+            raise IndexError("index is out of bounds")
+
+        return self.set[index]
+
     def add(self, elem):
         """Add element to the set if it doesn't exist."""
         if not self.set.__contains__(elem):
             self.set.append(elem)
             self.n += 1
+
+    def __contains__(self, elem):
+        """Generic contains method."""
+        return self.set.__contains__(elem)
 
     def remove(self, elem):
         """Remove an element from the set if it exist. Raises keyError if element doesn't exist."""
@@ -59,42 +74,77 @@ class MySet():
 
     def xinset(self, elem):
         """Return true if element is in set."""
-        pass
+        return self.set.__contains__(elem)
 
     def xnotinset(self, elem):
         """Return true if element is not in set."""
-        pass
+        return not self.xinset(elem)
 
     def isdisjoint(self, other):
         """Return true if the intersection between other and self.set is zero."""
-        pass
+        return len(self.intersection(other)) == 0
 
     def issubset(self, other):
         """Test if every element in myset is in other."""
-        pass
+        for i in range(self.n):
+            if not other.__contains__(self.set[i]):
+                return False
+        return True
 
     def issuperset(self, other):
         """Test if every element in other is in myset."""
-        pass
+        for i in range(self.n):
+            if not self.set.__contains__(other[i]):
+                return False
+        return True
 
     def union(self, other):
         """Return a new set with all the elements from myset and other."""
-        pass
+        union = MySet()
+        for i in range(self.n):
+            union.add(self.set[i])
+
+        for i in range(len(other)):
+            union.add(other[i])
+
+        return union
 
     def intersection(self, other):
         """Return a new set with the common elements between myset and other."""
-        pass
+        intersection = MySet()
+        if len(other) > self.n:
+            for i in range(len(other)):
+                if self.set.__contains__(other[i]):
+                    intersection.add(other[i])
+        else:
+            for i in range(self.n):
+                if other.__contains__(self.set[i]):
+                    intersection.add(self.set[i])
+
+        return intersection
 
     def difference(self, other):
         """Return a new set with the elements in myset that are not in other."""
-        pass
+        difference = MySet()
+        for elem in self.set:
+            if not other.__contains__(elem):
+                difference.add(elem)
+
+        return difference
 
     def symmetric_difference(self, other):
         """Return a new set with elements that are in either set or other but not in both."""
-        pass
+        sym_difference = MySet()
+        for i in range(len(other)):
+            if not self.set.__contains__(other[i]):
+                sym_difference.add(other[i])
+
+        for i in range(self.n):
+            if not other.__contains__(self.set[i]):
+                sym_difference.add(self.set[i])
+
+        return sym_difference
 
 if __name__ == '__main__':
-    myset = MySet()
-    myset.add(2)
-    myset.add(3)
-    myset.add(3)
+    myset = MySet([1, 2, 3, 4])
+    myset2 = MySet([1, 5, 6, 4])
