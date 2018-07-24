@@ -1,5 +1,4 @@
 """Graph Class."""
-import numpy as np
 
 
 class Graph():
@@ -48,6 +47,25 @@ class Graph():
 
         return None
 
+    def find_shortest_path(self, start, end, path=[]):
+        """Find the path between two nodes."""
+        shortest = len(self.nodes)
+        current_shortest = []
+        path.append(start)
+        if start == end:
+            return path
+        neighbours = self.get_neighbours(start)
+        for neighbour in neighbours:
+            if neighbour not in path:
+                new_path = self.find_shortest_path(neighbour, end, path)
+                if new_path:
+                    if len(new_path) < shortest:
+                        shortest = len(new_path)
+                        current_shortest = new_path
+
+        return current_shortest
+
 if __name__ == '__main__':
     g = Graph(['A', 'B', 'C', 'D'], [('A', 'B'), ('A', 'D'), ('A', 'C'), ('C', 'D')])
     path = g.find_path('C', 'B')
+    shortest_path = g.find_shortest_path('C', 'B')
