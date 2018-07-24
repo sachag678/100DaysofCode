@@ -4,7 +4,7 @@ The goal of this project is to code everyday for 1 hour.
 
 ## Challenges
 
-Make sure to write tests for each piece of code that I right. Also ensure there is continuous integration.
+Make sure to write tests for each piece of code that I write. Also ensure there is continuous integration for larger projects?
 
 # Data Structures
 	- Vector(Dynamic Array) - using [ctypes](https://www.geeksforgeeks.org/implementation-of-dynamic-array-in-python/)
