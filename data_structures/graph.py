@@ -1,6 +1,7 @@
 """Graph Class."""
 import numpy as np
 import copy
+from collections import defaultdict
 
 
 class Graph():
@@ -67,7 +68,7 @@ class Graph():
         """Find the shortest path between two nodes."""
         unvisited_nodes = list(self.nodes.keys())
         node_distances = {}
-        prev = {}
+        prev = defaultdict(list)
         for key in self.nodes.keys():
             if key != start:
                 node_distances[key] = float('Inf')
@@ -75,27 +76,34 @@ class Graph():
                 node_distances[key] = 0
         current_node = start
         while True:
-            neigbours = self.get_neighbours(current_node, unvisited_nodes)
-            for neighbour in neigbours:
-                if self.dist_between_nodes[current_node][neighbour] + node_distances[current_node] < node_distances[neighbour]:
+            neighbours = self.get_neighbours(current_node, unvisited_nodes)
+            for neighbour in neighbours:
+                if self.dist_between_nodes[current_node][neighbour] + node_distances[current_node] <= node_distances[neighbour]:
                     node_distances[neighbour] = self.dist_between_nodes[current_node][neighbour] + node_distances[current_node]
-                    prev[neighbour] = current_node
+                    prev[neighbour].append(current_node)
             unvisited_nodes.remove(current_node)
             if not unvisited_nodes.__contains__(end):
                 path = []
                 u = end
-                while prev.get(u, None) is not None:
-                    path.insert(0, u)
-                    u = prev[u]
-                path.insert(0, u)
+                path = self.backtrack_path(prev, path, u)
                 return node_distances[end], path
             unvisited_closest_nodes_distances = [v for k, v in node_distances.items() if unvisited_nodes.__contains__(k)]
             min_dist = min(unvisited_closest_nodes_distances)
             unvisited_closest_nodes = [k for k, v in node_distances.items() if v == min_dist and unvisited_nodes.__contains__(k)]
             current_node = np.random.choice(unvisited_closest_nodes)
+    
+    def backtrack_path(self, prev, path, u):
+        """Recursive method to get the path from end to start in the shortest manner."""
+        if prev.get(u, None) is None:
+            path.insert(0, u)
+            return path
+        path.insert(0, u)
+        u = prev[u].pop()
+        return self.backtrack_path(prev, path, u)
 
 
 if __name__ == '__main__':
-    g = Graph(['A', 'B', 'C', 'D'], [('A', 'B'), ('A', 'D'), ('A', 'C'), ('C', 'D')])
+    g = Graph(['A', 'B', 'C', 'D'], [('A', 'B'), ('D', 'B'), ('A', 'C'), ('C', 'D')])
     path = g.find_path('C', 'B')
     shortest_path = g.find_shortest_path('C', 'B')
+    print(shortest_path)
