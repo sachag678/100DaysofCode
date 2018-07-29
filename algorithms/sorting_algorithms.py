@@ -2,6 +2,7 @@
 import numpy as np
 import unittest
 import time
+import copy
 from search_algorithms import timer
 
 @timer
@@ -81,6 +82,31 @@ def merge(deck, start, mid, end):
                 deck[index] = highhalf[j]
                 j += 1
 
+def quick_sort(deck, start, end):
+    """Sort an unsorted array using quick sort."""
+    if end>start:
+        pivot = partition(deck, start, end)
+        quick_sort(deck, start, pivot - 1)
+        quick_sort(deck, pivot + 1, end)
+    
+    return deck
+
+def partition(deck, start, end):
+    """Partition the deck by placing the value at end at the point where everything 
+    on the rights is greater than it and everything on the left is less than it."""
+    pivot, j = start, start
+
+    for _ in range(start, end):
+        if deck[j]>deck[end]:
+            j+=1
+        else:
+            swap(deck, j, pivot)
+            j+=1
+            pivot+=1
+
+    swap(deck, pivot, end)
+    return pivot
+
 class TestSorting(unittest.TestCase):
     def setUp(self):
         self.deck = [22, 11, 99, 88, 9, 7, 42, 4]
@@ -91,16 +117,20 @@ class TestSorting(unittest.TestCase):
     def test_insert_sort(self):
         self.assertEqual(insertion_sort(self.deck), [4, 7, 9, 11, 22, 42, 88, 99])
     
-    def test_merge(self):
+    def test_merge_sort(self):
         self.assertEqual(merge_sort(self.deck, 0, len(self.deck)-1), [4, 7, 9, 11, 22, 42, 88, 99])
-
+    
+    def test_quick_sort(self):
+        self.assertEqual(quick_sort(self.deck, 0, len(self.deck)-1), [4, 7, 9, 11, 22, 42, 88, 99])
     
 if __name__ == '__main__':
     # unittest.main()
-    deck = np.random.randint(0, 1000, (5000, 1))
-
-    selection_sort(deck)
-    insertion_sort(deck)
+    deck = list(np.random.randint(0, 1000, (10000,)))
+    selection_sort(copy.deepcopy(deck))
+    insertion_sort(copy.deepcopy(deck))
     begin = time.time()
-    merge_sort(deck, 0, len(deck) - 1)
-    print('merge_sort',': ', (time.time()-begin)*1000.0)
+    merge_sort(copy.deepcopy(deck), 0, len(deck) - 1)
+    print('merge_sort',': ', (time.time() - begin) *1000.0)
+    begin = time.time()
+    quick_sort(copy.deepcopy(deck), 0, len(deck)-1)
+    print('quick_sort', ': ', (time.time() - begin) *1000.0)
