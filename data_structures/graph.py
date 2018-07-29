@@ -68,7 +68,7 @@ class Graph():
         """Find the shortest path between two nodes using dijkstra."""
         unvisited_nodes = list(self.nodes.keys())
         node_distances = {}
-        prev = defaultdict(list)
+        prev = defaultdict(set)
         for key in self.nodes.keys():
             if key != start:
                 node_distances[key] = float('Inf')
@@ -80,14 +80,11 @@ class Graph():
             for neighbour in neighbours:
                 if self.dist_between_nodes[current_node][neighbour] + node_distances[current_node] <= node_distances[neighbour]:
                     node_distances[neighbour] = self.dist_between_nodes[current_node][neighbour] + node_distances[current_node]
-                    prev[neighbour].append(current_node)
+                    prev[neighbour].add(current_node)
             unvisited_nodes.remove(current_node)
             if not unvisited_nodes.__contains__(end):
-                path = []
-                path2 = []
-                path = self.backtrack_path(prev, path, end)                
-                path2 = self.get_all_paths(prev, path2, end)
-                return node_distances[end], path, path2[0:len(path2)//2], path2[len(path2)//2: ]
+                path = self.dfs_paths(prev, end, start)
+                return node_distances[end], path
             unvisited_closest_nodes_distances = [v for k, v in node_distances.items() if unvisited_nodes.__contains__(k)]
             min_dist = min(unvisited_closest_nodes_distances)
             unvisited_closest_nodes = [k for k, v in node_distances.items() if v == min_dist and unvisited_nodes.__contains__(k)]
@@ -99,25 +96,21 @@ class Graph():
             path.insert(0, u)
             return path
         path.insert(0, u)
-        u = np.random.choice(prev[u])
+        u = prev[u].pop()
         return self.backtrack_path(prev, path, u)
     
-    def get_all_paths(self, prev, path, u, paths=[]):
-        if prev.get(u, None) is None:
-            path.insert(0, u)
-            return path
-        neighbours = prev[u]
-        for all in neighbours:
-            path.insert(0, u)
-            path = self.get_all_paths(prev, path, all, paths)
-        return path
-            
-
-
-
+    def dfs_paths(self, prev, start, goal, path=None):
+        if path is None:
+            path = [start]
+        if start == goal:
+            yield path
+        for next in prev[start] - set(path):
+            yield from self.dfs_paths(prev, next, goal, path + [next])
 
 if __name__ == '__main__':
-    g = Graph(['A', 'B', 'C', 'D'], [('A', 'B'), ('D', 'B'), ('A', 'C'), ('C', 'D')])
+    g = Graph(['A', 'B', 'C', 'D'], [('A', 'B'), ('A', 'D'), ('A', 'C'), ('C', 'D')])
     path = g.find_path('C', 'B')
     shortest_path = g.dijkstra('C', 'B')
-    print(shortest_path)
+    print(list(shortest_path[1]))
+    paths = g.dfs_paths(g.nodes, 'C', 'B')
+    print(list(paths))
