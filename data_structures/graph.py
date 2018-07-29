@@ -91,7 +91,7 @@ class Graph():
             current_node = np.random.choice(unvisited_closest_nodes)
     
     def backtrack_path(self, prev, path, u):
-        """Recursive method to get the path from end to start in the shortest manner."""
+        """Recursive method to get a path from end to start from prev in the shortest manner."""
         if prev.get(u, None) is None:
             path.insert(0, u)
             return path
@@ -106,9 +106,13 @@ class Graph():
             yield path
         for next in prev[start] - set(path):
             yield from self.dfs_paths(prev, next, goal, path + [next])
+    
+    def bfs_paths(self, prev, start, goal, path=None):
+        pass
+
 
 if __name__ == '__main__':
-    g = Graph(['A', 'B', 'C', 'D'], [('A', 'B'), ('A', 'D'), ('A', 'C'), ('C', 'D')])
+    g = Graph(['A', 'B', 'C', 'D'], [('A', 'B'), ('D', 'B'), ('A', 'C'), ('C', 'D')])
     path = g.find_path('C', 'B')
     shortest_path = g.dijkstra('C', 'B')
     print(list(shortest_path[1]))
