@@ -64,8 +64,8 @@ class Graph():
 
         return None
 
-    def find_shortest_path(self, start, end):
-        """Find the shortest path between two nodes."""
+    def dijkstra(self, start, end):
+        """Find the shortest path between two nodes using dijkstra."""
         unvisited_nodes = list(self.nodes.keys())
         node_distances = {}
         prev = defaultdict(list)
@@ -84,9 +84,10 @@ class Graph():
             unvisited_nodes.remove(current_node)
             if not unvisited_nodes.__contains__(end):
                 path = []
-                u = end
-                path = self.backtrack_path(prev, path, u)
-                return node_distances[end], path
+                path2 = []
+                path = self.backtrack_path(prev, path, end)                
+                path2 = self.get_all_paths(prev, path2, end)
+                return node_distances[end], path, path2[0:len(path2)//2], path2[len(path2)//2: ]
             unvisited_closest_nodes_distances = [v for k, v in node_distances.items() if unvisited_nodes.__contains__(k)]
             min_dist = min(unvisited_closest_nodes_distances)
             unvisited_closest_nodes = [k for k, v in node_distances.items() if v == min_dist and unvisited_nodes.__contains__(k)]
@@ -98,12 +99,25 @@ class Graph():
             path.insert(0, u)
             return path
         path.insert(0, u)
-        u = prev[u].pop()
+        u = np.random.choice(prev[u])
         return self.backtrack_path(prev, path, u)
+    
+    def get_all_paths(self, prev, path, u, paths=[]):
+        if prev.get(u, None) is None:
+            path.insert(0, u)
+            return path
+        neighbours = prev[u]
+        for all in neighbours:
+            path.insert(0, u)
+            path = self.get_all_paths(prev, path, all, paths)
+        return path
+            
+
+
 
 
 if __name__ == '__main__':
     g = Graph(['A', 'B', 'C', 'D'], [('A', 'B'), ('D', 'B'), ('A', 'C'), ('C', 'D')])
     path = g.find_path('C', 'B')
-    shortest_path = g.find_shortest_path('C', 'B')
+    shortest_path = g.dijkstra('C', 'B')
     print(shortest_path)
