@@ -107,9 +107,18 @@ class Graph():
         for next in prev[start] - set(path):
             yield from self.dfs_paths(prev, next, goal, path + [next])
     
-    def bfs_paths(self, prev, start, goal, path=None):
-        pass
-
+    def dfs_paths_iterative(self, prev, start, goal):
+        stack = [(start, [start])]
+        discovered = set()
+        while stack:
+            v, path = stack.pop()
+            if not discovered.__contains__(v):
+                discovered.add(v)
+                for next in prev[v]:
+                    if next == goal:
+                        yield path + [next]
+                    else:
+                        stack.append((next, path + [next]))
 
 if __name__ == '__main__':
     g = Graph(['A', 'B', 'C', 'D'], [('A', 'B'), ('D', 'B'), ('A', 'C'), ('C', 'D')])
@@ -118,3 +127,4 @@ if __name__ == '__main__':
     print(list(shortest_path[1]))
     paths = g.dfs_paths(g.nodes, 'C', 'B')
     print(list(paths))
+    print(list(g.dfs_paths_iterative(g.nodes, 'C', 'B')))
