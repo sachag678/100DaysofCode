@@ -12,17 +12,17 @@ Make sure to write tests for each piece of code that I write. Also ensure there 
 	- stack
 	- queue
 	- hash map
-	- set
+	- set - Done
 	- priority queue
 
 # Algorithms
-	- Dijikstra
+	- Dijikstra - Done
 	- Floyd-Warshall
 	- Travelling Salesman
 	- A\*
-	- Binary search
-	- bubble/selection/insertion sort
-	- Breadth/Depth first search
+	- Binary search - Done
+	- bubble/selection/insertion sort - Done
+	- Breadth/Depth first search - DOne
 
 # Other resources
 	- "https://community.topcoder.com/tc?module=MatchList"
