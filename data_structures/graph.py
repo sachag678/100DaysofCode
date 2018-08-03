@@ -83,13 +83,13 @@ class Graph():
                     prev[neighbour].add(current_node)
             unvisited_nodes.remove(current_node)
             if not unvisited_nodes.__contains__(end):
-                path = self.dfs_paths(prev, end, start)
+                path = self.dfs_paths_iterative(prev, end, start)
                 return node_distances[end], path
             unvisited_closest_nodes_distances = [v for k, v in node_distances.items() if unvisited_nodes.__contains__(k)]
             min_dist = min(unvisited_closest_nodes_distances)
             unvisited_closest_nodes = [k for k, v in node_distances.items() if v == min_dist and unvisited_nodes.__contains__(k)]
             current_node = np.random.choice(unvisited_closest_nodes)
-    
+
     def backtrack_path(self, prev, path, u):
         """Recursive method to get a path from end to start from prev in the shortest manner."""
         if prev.get(u, None) is None:
@@ -98,16 +98,9 @@ class Graph():
         path.insert(0, u)
         u = prev[u].pop()
         return self.backtrack_path(prev, path, u)
-    
-    def dfs_paths(self, prev, start, goal, path=None):
-        if path is None:
-            path = [start]
-        if start == goal:
-            yield path
-        for next in prev[start] - set(path):
-            yield from self.dfs_paths(prev, next, goal, path + [next])
-    
+
     def dfs_paths_iterative(self, prev, start, goal):
+        """Iterative depth first search."""
         stack = [(start, [start])]
         discovered = set()
         while stack:
@@ -125,6 +118,4 @@ if __name__ == '__main__':
     path = g.find_path('C', 'B')
     shortest_path = g.dijkstra('C', 'B')
     print(list(shortest_path[1]))
-    paths = g.dfs_paths(g.nodes, 'C', 'B')
-    print(list(paths))
     print(list(g.dfs_paths_iterative(g.nodes, 'C', 'B')))
