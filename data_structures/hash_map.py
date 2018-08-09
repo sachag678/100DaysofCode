@@ -84,10 +84,10 @@ class HashMap():
         """Return an iterator."""
         return self
     
-    def __next__(self):
+    def next(self):
         """Return next in the iterator."""
         try:
-            result = (self.keys[self.index], self.values[self.index])
+            result = self.keys[self.index]
         except IndexError:
             raise StopIteration
         self.index +=1
@@ -137,4 +137,7 @@ class TestHashMap(unittest.TestCase):
         self.assertEqual(self.hashmap, hashmap_)
     
 if __name__ == '__main__':
-    unittest.main()
+    h = HashMap(list=[('john', 20),('greg', 50)])
+  #  list(h)
+    for i in h:
+        print(h)
