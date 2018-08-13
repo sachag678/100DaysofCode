@@ -13,11 +13,25 @@ class ReverseList():
         else:
             self.num_elements = 0
 
+    def __repr__(self):
+        """String representation."""
+        s = '['
+
+        for index, val in enumerate(self.l):
+            s += str(val)
+            if index < self.num_elements - 1:
+                s += ','
+        
+        s += ']'
+
+        return s
+        
+
     def __iter__(self):
         """Return the iter object."""
         return self
 
-    def next(self):
+    def __next__(self):
         """Get the next value."""
         if self.index >= self.num_elements:
             raise StopIteration()
@@ -28,3 +42,5 @@ class ReverseList():
 
 if __name__ == '__main__':
     r = ReverseList([1, 2, 3, 4])
+    for val in r:
+        print(val)
