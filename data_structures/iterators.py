@@ -64,6 +64,7 @@ class ReverseListUsingGenerator():
         self.num_elements = len(l)
 
     def __iter__(self):
+        """Iterate through the list and use a generator in place of the iterator."""
         for index in range(len(self.l)):
             yield self.l[self.num_elements - index - 1]
 

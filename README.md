@@ -6,23 +6,26 @@ The goal of this project is to code everyday for 1 hour.
 
 Make sure to write tests for each piece of code that I write. Also ensure there is continuous integration for larger projects?
 
+
+(Items in bold have been completed.)
 # Data Structures
-	- Vector(Dynamic Array) - using [ctypes](https://www.geeksforgeeks.org/implementation-of-dynamic-array-in-python/)
-	- linked list
+	- **Vector(Dynamic Array)** - using [ctypes](https://www.geeksforgeeks.org/implementation-of-dynamic-array-in-python/)
+	- **linked list**
 	- stack
 	- queue
-	- hash map
-	- set - Done
+	- **hash map**
+	- **set**
 	- priority queue
+	- **iterators**
 
 # Algorithms
-	- Dijikstra - Done
+	- **Dijikstra**
 	- Floyd-Warshall
 	- Travelling Salesman
 	- A\*
-	- Binary search - Done
-	- bubble/selection/insertion sort - Done
-	- Breadth/Depth first search - DOne
+	- **Binary search**
+	- **bubble/selection/insertion sort**
+	- **Breadth/Depth first search**
 
 # Other resources
 	- "https://community.topcoder.com/tc?module=MatchList"
