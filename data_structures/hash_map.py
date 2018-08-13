@@ -10,7 +10,6 @@ class HashMap():
         self.keys = []
         self.values = []
         self.n = 0
-        self.index = 0
         if list is not None:
             for k,v in list:
                 self.__setitem__(k, v)
@@ -81,18 +80,10 @@ class HashMap():
             yield (k, v)
     
     def ___iter__(self):
-        """Return an iterator."""
-        return self
+        """Return generator of keys."""
+        for k in self.keys:
+            yield k
     
-    def next(self):
-        """Return next in the iterator."""
-        try:
-            result = self.keys[self.index]
-        except IndexError:
-            raise StopIteration
-        self.index +=1
-        return result
-
 class TestHashMap(unittest.TestCase):
     """Test HashMap."""
 
