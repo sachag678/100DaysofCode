@@ -52,7 +52,35 @@ class MinStack():
     def is_empty(self):
         """Checks if the stack is empty or not."""
         return len(self.stack) == 0
+
+class Stack():
+    """Simple Stack Implementation."""
+    def __init__(self):
+        self.stack = []
     
+    def push(self, item):
+        self.stack.append(item)
+    
+    def pop(self):
+        return self.stack.pop()
+
+    def peek(self):
+        return self.stack[-1]
+
+    def is_empty(self):
+        return len(self.stack) == 0    
+
+class StackOfStacks(Stack):
+
+    def __init__(self):
+        self.stack = Stack()
+        new_stack = Stack()
+        self.stack.push(new_stack)
+    
+    def push(self, item):
+        new_stack = self.stack.pop()
+        new_stack.push(item)
+        self.stack.push(new_stack)
 
 class TestStack(unittest.TestCase):
     
