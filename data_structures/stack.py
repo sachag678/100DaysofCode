@@ -69,18 +69,46 @@ class Stack():
 
     def is_empty(self):
         return len(self.stack) == 0    
+    
+    def __iter__(self):
+        for i in range(len(self.stack)):
+            yield self.stack[i]
+
+    def __len__(self):
+        return len(self.stack)
+
+    def __repr__(self):
+        s = '['
+        for index, val in enumerate(self.stack):
+            s += str(val)
+            if index < len(self.stack) - 1:
+                s += ','
+
+        s += ']'
+        return s
+    
+    def __getitem__(self, index):
+        return self.stack[index]
 
 class StackOfStacks(Stack):
 
-    def __init__(self):
+    def __init__(self, max_len):
         self.stack = Stack()
-        new_stack = Stack()
-        self.stack.push(new_stack)
+        self.max_len = max_len
     
     def push(self, item):
-        new_stack = self.stack.pop()
+        if self.stack.is_empty():
+            new_stack = Stack()
+        else:
+            new_stack = self.stack.pop()
+            
+        if len(new_stack) > self.max_len:
+            self.stack.push(new_stack)
+            new_stack = Stack()
+
         new_stack.push(item)
         self.stack.push(new_stack)
+
 
 class TestStack(unittest.TestCase):
     
@@ -102,7 +130,32 @@ class TestStack(unittest.TestCase):
         min_stack.pop()
         self.assertEqual(min_stack.min(), 5)
 
+    def testStackOfStacks(self):
+
+        sos = StackOfStacks(3)
+        sos.push(1)
+        sos.push(2)
+        sos.push(3)
+        sos.push(4)
+        sos.push(5)
+
+        self.assertEqual(str(sos),'[[1,2,3,4],[5]]')
+
+        self.assertEqual(str(sos.peek()), '[5]')
+        
+        sos.pop()  # remove latest item - one stack remaining
+        
+        self.assertEqual(str(sos),'[[1,2,3,4]]')
+        
+        sos.pop()  # remove latest item - empty stack of stack
+
+        self.assertEqual(sos.is_empty(), True)
+
+        sos.push(1) # push item when stack is empty again
+
+        self.assertEqual(str(sos), '[[1]]')
+        
+
 if __name__ == '__main__':
     unittest.main()
-
 
