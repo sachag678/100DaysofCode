@@ -109,7 +109,6 @@ class StackOfStacks(Stack):
         new_stack.push(item)
         self.stack.push(new_stack)
 
-
 class TestStack(unittest.TestCase):
     
     def test_min_stack(self):
