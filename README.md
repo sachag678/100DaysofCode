@@ -11,8 +11,8 @@ Make sure to write tests for each piece of code that I write. Also ensure there 
 # Data Structures
 	- **Vector(Dynamic Array)** - using [ctypes](https://www.geeksforgeeks.org/implementation-of-dynamic-array-in-python/)
 	- **linked list**
-	- stack
-	- queue
+	- **stack**
+	- **queue**
 	- **hash map**
 	- **set**
 	- priority queue
@@ -29,5 +29,5 @@ Make sure to write tests for each piece of code that I write. Also ensure there 
 
 # Other resources
 	- "https://community.topcoder.com/tc?module=MatchList"
-	- Cracking the Coding interview
+	- Cracking the Coding interview - In progress
 
