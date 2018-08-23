@@ -24,11 +24,21 @@ class BinaryTreeNode():
         self.marked = True
         queue.add(self)
         s = ''
+        counter = 1
+        depth = 0
 
         while not queue.is_empty():
             r = queue.remove()
             s += str(r.name)
-            s += ' '
+            s += '\t'
+            
+            if counter == 2**depth:
+                s += '\n'
+                counter = 0
+                depth += 1
+
+            counter += 1
+
             if r.left is not None:
                 if r.left.marked == False:
                     r.left.marked = True
