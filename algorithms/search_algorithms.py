@@ -8,7 +8,7 @@ def timer(func):
         ret = func(*args)
         time2 = time.time()
         print(func.__name__, ':', (time2-time1)*1000.0)
-        return ret
+        return ret 
     return wrap
 
 @timer
@@ -26,6 +26,31 @@ def binary_search(array, target):
             max = guess - 1
         guess = (min + max)//2
     return guess
+
+@timer
+def binary_search_recursive(array, target):
+    """Recursive version of binary search. (Slower than the regular iterative approach.)"""
+    min = 0
+    max = len(array) - 1
+    guess = (min + max)//2
+    return recurse(array, target, min, max, guess)
+
+def recurse(array, target, min, max, guess):
+    """Calls itself until a stopping condition is met."""
+    if array[guess] == target:
+        return guess
+    
+    if min>=max:
+        return -1
+
+    if array[guess] < target:
+        min = guess + 1
+    else:
+        max = guess -1 
+
+    guess = (min + max)//2
+
+    return recurse(array, target, min, max, guess) 
 
 @timer
 def linear_search(array, target):
@@ -46,3 +71,4 @@ if __name__ == '__main__':
     print(binary_search(array, target))
     print(linear_search(array, target))
     print(built_int_search(array, target))
+    print(binary_search_recursive(array, target))
