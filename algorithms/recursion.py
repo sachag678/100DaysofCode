@@ -3,6 +3,7 @@ import unittest
 from search_algorithms import timer
 import time
 import numpy as np
+import copy
 
 def factorial(n, sum=None):
     """Recursive factorial."""
@@ -100,20 +101,49 @@ def triple_step(n):
 def calculate_power_set(input_set, power_set = None):
     """Problem 8.4 - Cracking the coding interview.
     
-    Calculate the power set using recursion.
+    Calculate the power set using recursion. The pitfall with this approach is that it goes to 
+    the case of n = 0, n times. So we are extending the tree n^n times instead of 2^n times.
     """
     if power_set is None:
-        power_set = set()
+        power_set = [] 
 
     if len(input_set) == 0:
-        power_set.add('[]')
+        power_set.append([])
         return power_set
     
-    power_set.add(str(input_set))
+    power_set.append(copy.deepcopy(input_set))
+
     for i in range(len(input_set)):
         removed_value = input_set.pop(i)
         power_set = calculate_power_set(input_set, power_set)
         input_set.insert(i, removed_value)
+    
+    return power_set
+
+def calculate_power_set_2(input_set, index=0):
+    """Book version - Uses the idea that the powerset of n is made up of the powerset of n - 1 plus
+    a clone of powerset of n - 1 with n added to it.
+
+    P(1) = [[], [1]]
+    P(1) + 2 = [[2], [1, 2]]   +
+    -----------------------------
+    P(2) = [[], [1], [2], [1, 2]]
+
+    """
+    power_set = [] 
+
+    if len(input_set) == index:
+        power_set.append([])
+    else:
+        power_set = calculate_power_set_2(input_set, index + 1)
+        item = input_set[index]
+        moresubset = []
+        for subset in power_set:
+            newsubset = []
+            newsubset.extend(subset)
+            newsubset.append((item))
+            moresubset.append(newsubset)
+        power_set.extend(moresubset)
     
     return power_set
 
@@ -141,6 +171,20 @@ def test_time_complexity_of_triple_step():
     begin = time.time()
     print('There is(are) {} way(s) to climb the steps when n is {}.'.format(triple_step(num_steps), num_steps))
     print('Time taken is: {} s.'.format((time.time() - begin)*1000))
+
+def test_time_complexity_of_power_set():
+    """Test my version of power set vs the text book version. My version is much slower and after 9 numbers in the set
+    starts to become too slow."""
+    
+    s = [1, 2, 4, 5, 6, 7, 8, 9, 10]
+ 
+    begin = time.time()
+    (calculate_power_set(s))
+    print('Time taken for my version is {} s.'.format((time.time()-begin)*1000.0))
+
+    begin = time.time()
+    (calculate_power_set_2(s))
+    print('Time taken for book version is {} s.'.format((time.time()-begin)*1000.0))
 
 class TestRecursion(unittest.TestCase):
     """Test Recursive functions."""
@@ -191,7 +235,4 @@ class TestRecursion(unittest.TestCase):
         self.assertEqual(triple_step_with_memoization(4), 7)
 
 if __name__ == "__main__":
-    # unittest.main()
-    s = [1, 2, 3]
-    print(calculate_power_set(s))
-
+    unittest.main()
