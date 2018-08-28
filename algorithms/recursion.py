@@ -97,6 +97,26 @@ def triple_step(n):
 
     return triple_step(n - 1) + triple_step(n - 2) + triple_step(n - 3)
 
+def calculate_power_set(input_set, power_set = None):
+    """Problem 8.4 - Cracking the coding interview.
+    
+    Calculate the power set using recursion.
+    """
+    if power_set is None:
+        power_set = set()
+
+    if len(input_set) == 0:
+        power_set.add('[]')
+        return power_set
+    
+    power_set.add(str(input_set))
+    for i in range(len(input_set)):
+        removed_value = input_set.pop(i)
+        power_set = calculate_power_set(input_set, power_set)
+        input_set.insert(i, removed_value)
+    
+    return power_set
+
 def test_time_complexity_of_fibonacci():
     """Test the speed of bottom-up dynamic programming vs recursive without caching."""
     fib_num = 5
@@ -170,6 +190,8 @@ class TestRecursion(unittest.TestCase):
         self.assertEqual(triple_step_with_memoization(3), 4)
         self.assertEqual(triple_step_with_memoization(4), 7)
 
-
 if __name__ == "__main__":
-    unittest.main()
+    # unittest.main()
+    s = [1, 2, 3]
+    print(calculate_power_set(s))
+
