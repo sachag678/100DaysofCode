@@ -4,6 +4,7 @@
 """
 
 import random
+from collections import Counter
 
 class Card():
     """Generic card class."""
@@ -56,6 +57,9 @@ class Deck():
             drawn_cards.append(drawn_card)
 
         return drawn_cards
+    
+    def add(self, card):
+        self.cards.append(card)
 
 class Hand():
 
@@ -73,6 +77,25 @@ class Hand():
                 s += ', '
         s += ']'
         return s
+    
+    def check_hand_for_pairs_and_put_them_down(self):
+        pairs = set() 
+        for card in self.hand:
+            for other_card in self.hand:
+                if card is not other_card:
+                    if card.rank == other_card.rank:
+                        pairs.add(card)
+                        pairs.add(other_card)
+                        break
+        
+        for card in pairs:
+            self.hand.remove(card)
+
+    def __len__(self):
+        return len(self.hand)
+    
+    def discard(self):
+        return self.hand.pop(random.choice(range(len(self.hand))))
 
 class GameOfPairs():
 
@@ -80,21 +103,39 @@ class GameOfPairs():
         self.deck = Deck()
         self.hands = [Hand(), Hand()]
 
-        for _ in range(7):
+        for _ in range(2):
             for hand in self.hands:
                 hand.add(self.deck.draw()[0])
         
-        print(self.hands[0])
-        print(self.hands[1])
+        for hand in self.hands:
+            print(hand)
+        print('----------------------')
 
-    def play(self):
+        self.game_over = False
 
-        for hand in hands:
+    def play_turn(self):
+        for index, hand in enumerate(self.hands):
+            print('Player {}s turn'.format(index + 1))
             hand.add(self.deck.draw()[0])
-            self.check_hand_for_pairs(hand)
+            print(hand)
+            hand.check_hand_for_pairs_and_put_them_down()
+            self.deck.add(hand.discard())
+            print(hand)
+            print('------------')
+        
+        for index, hand in enumerate(self.hands):
+            if len(hand) == 0:
+                self.game_over = True
+                print('Player {} has won!'.format(index + 1))
+
+    def run(self):
+        while not self.game_over:
+            self.play_turn()
+
 
 if __name__ == '__main__':
     gop = GameOfPairs()
+    gop.run()
 
 
         
