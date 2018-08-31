@@ -30,4 +30,5 @@ Make sure to write tests for each piece of code that I write. Also ensure there 
 # Other resources
 	- "https://community.topcoder.com/tc?module=MatchList"
 	- Cracking the Coding interview - In progress
+	- Code from the CS229 - i.e., logistic regression, linear regression using normal equations and gradient descent.
 
