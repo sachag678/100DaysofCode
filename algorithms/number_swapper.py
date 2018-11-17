@@ -23,3 +23,10 @@ def swap(a, b):
     return a, b
 
 print(swap(4, 5))
+
+# XOR
+# IN, IN, OUT
+# 0, 0, 0
+# 0, 1, 1
+# 1, 0, 1
+# 1, 1, 0
