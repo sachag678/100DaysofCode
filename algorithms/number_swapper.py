@@ -16,11 +16,13 @@ def swap_with_temp(a, b):
     return a, b
 
 def swap(a, b):
-    """Need to remove the temporary variable. """
-    diff = b - a
-    b = b - diff
-    a = a + diff
+    """Replace temp variable with a function."""
+    b = b - diff(a, b)
+    a = a + diff(a, b)
     return a, b
+
+def diff(a, b):
+    return b - a
 
 print(swap(4, 5))
 
