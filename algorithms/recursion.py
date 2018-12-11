@@ -5,6 +5,12 @@ import time
 import numpy as np
 import copy
 
+def recursive_factorial(n):
+    
+    if n<=1:
+        return 1
+    return n*recursive_factorial(n-1)
+
 def factorial(n, sum=None):
     """Recursive factorial."""
     if sum is None:
