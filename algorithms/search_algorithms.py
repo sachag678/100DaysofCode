@@ -7,7 +7,7 @@ def timer(func):
         time1 = time.time()
         ret = func(*args)
         time2 = time.time()
-        print(func.__name__, ':', (time2-time1)*1000.0)
+        print(func.__name__, ':', (time2-time1))
         return ret 
     return wrap
 

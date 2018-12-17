@@ -20,6 +20,7 @@ def factorial(n, sum=None):
     sum *= n-1
     return factorial(n-1, sum)
 
+@timer
 def iterative_factorial(n):
     """Iterative factorial."""
     sum = 1
@@ -241,4 +242,5 @@ class TestRecursion(unittest.TestCase):
         self.assertEqual(triple_step_with_memoization(4), 7)
 
 if __name__ == "__main__":
-    unittest.main()
+    #unittest.main()
+    print(iterative_factorial(200000))
