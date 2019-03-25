@@ -28,6 +28,7 @@ int main(){
 	}
         auto stop = high_resolution_clock::now();
         auto duration = duration_cast<nanoseconds>(stop - start);
+    	std::cout <<"output : " << sum << std::endl;
 	
         cout <<"output : " << guess << endl;
         cout <<"iterative_factorial : " << duration.count() << endl;
