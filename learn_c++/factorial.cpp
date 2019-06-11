@@ -6,7 +6,7 @@ using namespace std::chrono;
 int main(){
     auto start = high_resolution_clock::now();
 
-    unsigned int n = 200000;
+    unsigned int n = 6;
     unsigned long long sum = 1;
     for(int i=2; i <= n; ++i){
         sum = sum * i;
