@@ -156,12 +156,12 @@ def calculate_power_set_2(input_set, index=0):
 
 def test_time_complexity_of_fibonacci():
     """Test the speed of bottom-up dynamic programming vs recursive without caching."""
-    fib_num = 5
-    print(fibonacci(fib_num))
+    fib_num = 250
+    #print(fibonacci(fib_num))
 
-    begin = time.time()
-    fibonacci_recursive(fib_num)
-    print('recursive_fibonacci:', (time.time()-begin)*1000.0)
+    #begin = time.time()
+    #fibonacci_recursive(fib_num)
+    #print('recursive_fibonacci:', (time.time()-begin)*1000.0)
 
     begin = time.time()
     fibonacci_recursive_with_memoization(fib_num)
@@ -243,4 +243,5 @@ class TestRecursion(unittest.TestCase):
 
 if __name__ == "__main__":
     #unittest.main()
-    print(iterative_factorial(200000))
+    #print(iterative_factorial(200000))
+    test_time_complexity_of_fibonacci()

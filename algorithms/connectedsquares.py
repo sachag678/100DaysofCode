@@ -19,7 +19,6 @@ def get_num_connected_nodes():
                     item = grid[i][j]
     return item, max_len
 
-
 def dfs(loc):
     visited.add(loc)
     stack = []
