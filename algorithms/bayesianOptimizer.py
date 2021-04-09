@@ -2,8 +2,9 @@ import numpy as np
 from scipy.stats import norm
 from numpy.linalg import cholesky
 
-def expectedImprovement(bestPoint, x):
-    mu, sigma = gp_pred(x)
+def expectedImprovement(bestPoint, x_, x, y):
+    mu, sigma = gp_pred(x_, x, y)
+    eta = 0.001
     numerator = mu - bestPoint - eta
     Z = numerator/sigma
 
@@ -29,5 +30,11 @@ def kernel(xi, xj):
 
 x = np.array([[1, 3, 7]]).reshape(-1, 1)
 y = np.array([[2/9.0, 4/9.0, 9/9.0]]).reshape(-1, 1)
-xstar = np.array([[5]])
-print(gp_pred(xstar, x, y))
+
+points = [0.3, 1.5, 3.5, 5, 9.6]
+
+for i in points:
+    xstar = np.array([[i]]).reshape(-1, 1)
+    bestPoint = np.array([[1.0]]).reshape(-1, 1)
+
+    print(expectedImprovement(bestPoint, xstar, x, y))
